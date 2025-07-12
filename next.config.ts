@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  // SSR/Node.js deploy, no static export
 };
 
 export default nextConfig;

@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React, { useState, useMemo } from 'react';
 import { MiningPool } from '@/types/pool';
 import {
@@ -12,7 +13,6 @@ import {
   Paper,
   Chip,
   Box,
-  TextField,
   Select,
   MenuItem,
   FormControl,
@@ -25,6 +25,16 @@ import PoolDetailsModal from '../Modal/PoolDetailsModal';
 interface MiningPoolTableProps {
   data: MiningPool[];
 }
+
+const numericFields: (keyof MiningPool)[] = [
+  'id',
+  'hashrateTHs',
+  'activeWorkers',
+  'rejectRate',
+  'uptimePercent',
+  'feePercent',
+  'last24hRevenueBTC',
+];
 
 const MiningPoolTable = ({ data }: MiningPoolTableProps) => {
   const [selectedPool, setSelectedPool] = useState<MiningPool | null>(null);
@@ -45,7 +55,7 @@ const MiningPoolTable = ({ data }: MiningPoolTableProps) => {
       if (detailedPool) {
         setSelectedPool(detailedPool);
       }
-    } catch (error) {
+    } catch {
       // error handling
     } finally {
       setIsLoadingDetails(false);
@@ -82,7 +92,7 @@ const MiningPoolTable = ({ data }: MiningPoolTableProps) => {
     return allowedColumns.map((key) => ({
       key,
       label: key.toUpperCase(),
-      render: getRenderFunction(key) as (value: any) => React.ReactNode,
+      render: getRenderFunction(key) as (value: string | number) => React.ReactNode,
     }));
   };
 
@@ -100,16 +110,6 @@ const MiningPoolTable = ({ data }: MiningPoolTableProps) => {
   };
 
   const columns = getColumns();
-
-  const numericFields: (keyof MiningPool)[] = [
-    'id',
-    'hashrateTHs',
-    'activeWorkers',
-    'rejectRate',
-    'uptimePercent',
-    'feePercent',
-    'last24hRevenueBTC',
-  ];
 
   const filteredAndSortedData = useMemo(() => {
     const filtered = data.filter(pool => {
@@ -129,7 +129,7 @@ const MiningPoolTable = ({ data }: MiningPoolTableProps) => {
     });
 
     return filtered;
-  }, [data, statusFilter, sortBy, sortOrder, numericFields]);
+  }, [data, statusFilter, sortBy, sortOrder]);
 
   const handleSort = (column: keyof MiningPool) => {
     if (sortBy === column) {
@@ -271,7 +271,5 @@ const MiningPoolTable = ({ data }: MiningPoolTableProps) => {
     </>
   );
 };
-
-MiningPoolTable.displayName = 'MiningPoolTable';
 
 export default MiningPoolTable;
