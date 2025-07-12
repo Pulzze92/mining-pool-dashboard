@@ -23,7 +23,6 @@ interface PoolDetailsModalProps {
   error: string | null;
 }
 
-// Компонент для отображения статуса пула
 const PoolStatusChip = ({ status }: { status: string }) => {
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -80,13 +79,13 @@ const StatCard = ({ value, label }: { value: string | number; label: string }) =
 );
 
 const BasicInfoSection = ({ pool }: { pool: MiningPool }) => (
-  <InfoSection title="Основная информация">
+  <InfoSection title="Basic information">
     <Box display="grid" gridTemplateColumns="repeat(3, 1fr)" gap={2}>
-      <InfoField label="Название пула" value={pool.name} />
-      <InfoField label="Локация" value={pool.location} />
+      <InfoField label="Pool name" value={pool.name} />
+      <InfoField label="Location" value={pool.location} />
       <Box>
         <Typography variant="body2" color="textSecondary">
-          Статус
+          Status
         </Typography>
         <PoolStatusChip status={pool.status} />
       </Box>
@@ -95,20 +94,20 @@ const BasicInfoSection = ({ pool }: { pool: MiningPool }) => (
 );
 
 const PerformanceSection = ({ pool }: { pool: MiningPool }) => (
-  <InfoSection title="Производительность">
+  <InfoSection title="Performance">
     <Box display="grid" gridTemplateColumns="repeat(3, 1fr)" gap={2}>
-      <InfoField label="Доходы за 24ч (BTC)" value={pool.last24hRevenueBTC} suffix=" BTC" />
-      <InfoField label="Время работы" value={pool.uptimePercent} suffix="%" />
-      <InfoField label="Комиссия" value={pool.feePercent} suffix="%" />
+      <InfoField label="24h revenue (BTC)" value={pool.last24hRevenueBTC} suffix=" BTC" />
+      <InfoField label="Uptime" value={pool.uptimePercent} suffix="%" />
+      <InfoField label="Fee" value={pool.feePercent} suffix="%" />
     </Box>
   </InfoSection>
 );
 
 const StatisticsSection = ({ pool }: { pool: MiningPool }) => (
-  <InfoSection title="Статистика">
+  <InfoSection title="Statistics">
     <Box display="grid" gridTemplateColumns="repeat(4, 1fr)" gap={2}>
       <StatCard value={pool.hashrateTHs} label="TH/s" />
-      <StatCard value={pool.activeWorkers} label="Воркеры" />
+      <StatCard value={pool.activeWorkers} label="Workers" />
       <StatCard value={`${(pool.rejectRate * 100).toFixed(2)}%`} label="Reject Rate" />
       <StatCard value={`${pool.uptimePercent}%`} label="Uptime" />
     </Box>
@@ -169,9 +168,15 @@ export default function PoolDetailsModal({
       PaperProps={{
         sx: { borderRadius: 2 },
       }}
+      BackdropProps={{
+        sx: {
+          backdropFilter: 'blur(8px)',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        },
+      }}
     >
-      <DialogTitle sx={{ bgcolor: 'gray', color: 'white', textAlign: 'center' }}>
-        {pool ? `Детали пула: ${pool.name}` : 'Загрузка...'}
+      <DialogTitle sx={{ bgcolor: 'primary.main', color: 'white', textAlign: 'center' }}>
+        {pool ? `Pool: ${pool.name}` : 'Loading...'}
       </DialogTitle>
 
       <DialogContent
@@ -182,7 +187,7 @@ export default function PoolDetailsModal({
 
       <DialogActions sx={{ p: 3 }}>
         <Button onClick={onClose} variant="contained" color="primary">
-          Закрыть
+          Close
         </Button>
       </DialogActions>
     </Dialog>

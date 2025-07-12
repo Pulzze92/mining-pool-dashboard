@@ -7,7 +7,7 @@ interface LoadingSpinnerProps {
   message?: string;
 }
 
-export default function LoadingSpinner({ message = 'Загрузка...' }: LoadingSpinnerProps) {
+export default function LoadingSpinner({ message = 'Loading...' }: LoadingSpinnerProps) {
   return (
     <Box
       display="flex"

@@ -11,7 +11,7 @@ interface PoolsState {
   clearError: () => void;
 }
 
-export const useMiningPoolsStore = create<PoolsState>((set, get) => ({
+export const useMiningPoolsStore = create<PoolsState>((set) => ({
   pools: [],
   isLoading: false,
   error: null,
@@ -23,14 +23,14 @@ export const useMiningPoolsStore = create<PoolsState>((set, get) => ({
       const response = await fetch('/api/mining-pools');
 
       if (!response.ok) {
-        throw new Error(`Ошибка! Статус: ${response.status}`);
+        throw new Error(`Error! Status: ${response.status}`);
       }
 
       const pools = await response.json();
       set({ pools, isLoading: false });
     } catch (error) {
       set({
-        error: error instanceof Error ? error.message : 'Ошибка загрузки данных',
+        error: error instanceof Error ? error.message : 'Failed to load data',
         isLoading: false,
       });
     }
@@ -41,14 +41,14 @@ export const useMiningPoolsStore = create<PoolsState>((set, get) => ({
       const response = await fetch(`/api/mining-pools/${id}`);
 
       if (!response.ok) {
-        throw new Error(`Ошибка! Статус: ${response.status}`);
+        throw new Error(`Error! Status: ${response.status}`);
       }
 
       const pool = await response.json();
       return pool;
     } catch (error) {
       set({
-        error: error instanceof Error ? error.message : 'Ошибка загрузки пула',
+        error: error instanceof Error ? error.message : 'Failed to load pool',
       });
       return null;
     }

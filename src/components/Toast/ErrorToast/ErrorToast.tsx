@@ -18,7 +18,7 @@ export default function ErrorToast({ open, message, onClose }: ErrorToastProps) 
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
     >
       <Alert onClose={onClose} severity="error" variant="filled" sx={{ width: '100%' }}>
-        <AlertTitle>Ошибка</AlertTitle>
+        <AlertTitle>Error</AlertTitle>
         {message}
       </Alert>
     </Snackbar>

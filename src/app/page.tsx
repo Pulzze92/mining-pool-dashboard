@@ -2,6 +2,8 @@
 import MiningPoolTable from '@/components/Table/MiningPoolsTable';
 import { useMiningPoolsStore } from '@/store/pools';
 import { useEffect } from 'react';
+import { Box, Typography, Container } from '@mui/material';
+import ThemeToggle from '@/components/Theme/ThemeToggle';
 
 import Spinner from '@/components/Spinner/Spinner';
 import ErrorToast from '@/components/Toast/ErrorToast/ErrorToast';
@@ -14,20 +16,23 @@ export default function Home() {
   }, [fetchPools]);
 
   if (isLoading) {
-    return <Spinner message="Загружаем данные..." />;
+    return <Spinner message="Loading..." />;
   }
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <h1 className="text-4xl font-bold text-gray-200 mb-8 w-full text-center">
+    <Container maxWidth="xl" sx={{ py: 4 }}>
+      <Box sx={{ mb: 4, textAlign: 'center', position: 'relative' }}>
+        <ThemeToggle />
+        <Typography variant="h3" component="h1" gutterBottom color="primary" fontWeight="bold">
           Mining Pools Dashboard
-        </h1>
-        <div className="flex flex-col gap-4">
-          <MiningPoolTable data={pools} />
-        </div>
-      </main>
+        </Typography>
+      </Box>
+
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <MiningPoolTable data={pools} />
+      </Box>
+
       <ErrorToast open={!!error} message={error || ''} onClose={clearError} />
-    </div>
+    </Container>
   );
 }
