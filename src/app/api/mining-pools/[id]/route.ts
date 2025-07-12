@@ -4,7 +4,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
   try {
     const { id } = await params;
 
-    console.log('Запрос пулла с ID:', id)
+    console.log('Запрос пулла с ID:', id);
 
     const response = await fetch(
       `https://6872860b76a5723aacd505be.mockapi.io/api/mining-pools/pool/${id}`
