@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import CustomThemeProvider from '@/components/Theme/ThemeProvider';
 import './globals.css';
+import MobileDetector from '@/components/MobileDetector';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -15,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'Mining Pools Dashboard',
-  description: 'Mining Pools Dashboard',
+  description: 'Mining pools dashboard',
 };
 
 export default function RootLayout({
@@ -24,9 +25,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ru">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <CustomThemeProvider>{children}</CustomThemeProvider>
+        <CustomThemeProvider>
+          <MobileDetector />
+          {children}
+        </CustomThemeProvider>
       </body>
     </html>
   );

@@ -1,12 +1,12 @@
 'use client';
 import React from 'react';
-import { Switch, FormControlLabel, Box, useMediaQuery, useTheme as useMuiTheme } from '@mui/material';
+import { Switch, FormControlLabel, Box } from '@mui/material';
 import { useTheme } from './ThemeProvider';
+import { useMiningPoolsStore } from '@/store/pools';
 
 export default function ThemeToggle() {
   const { isDarkMode, toggleTheme } = useTheme();
-  const muiTheme = useMuiTheme();
-  const isMobile = useMediaQuery(muiTheme.breakpoints.down('sm'));
+  const isMobile = useMiningPoolsStore((s) => s.isMobile);
 
   return (
     <Box

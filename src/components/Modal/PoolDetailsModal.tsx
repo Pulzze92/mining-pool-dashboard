@@ -11,11 +11,10 @@ import {
   Box,
   Chip,
   Alert,
-  useMediaQuery,
-  useTheme as useMuiTheme,
 } from '@mui/material';
 import { MiningPool } from '@/types/pool';
 import Spinner from '../Spinner/Spinner';
+import { useMiningPoolsStore } from '@/store/pools';
 
 interface PoolDetailsModalProps {
   open: boolean;
@@ -125,6 +124,8 @@ const ModalContent = ({
   error: string | null;
   pool: MiningPool | null;
 }) => {
+  const isMobile = useMiningPoolsStore((s) => s.isMobile);
+
   if (isLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" py={4}>
@@ -146,7 +147,7 @@ const ModalContent = ({
   }
 
   return (
-    <Box display="grid" gap={4}>
+    <Box display="grid" gap={4} sx={{ width: isMobile ? '50%' : '100%' }}>
       <BasicInfoSection pool={pool} />
       <PerformanceSection pool={pool} />
       <StatisticsSection pool={pool} />
@@ -161,8 +162,7 @@ export default function PoolDetailsModal({
   isLoading,
   error,
 }: PoolDetailsModalProps) {
-  const muiTheme = useMuiTheme();
-  const isMobile = useMediaQuery(muiTheme.breakpoints.down('sm'));
+  const isMobile = useMiningPoolsStore((s) => s.isMobile);
   return (
     <Dialog
       open={open}

@@ -5,6 +5,8 @@ interface PoolsState {
   pools: MiningPool[];
   isLoading: boolean;
   error: string | null;
+  isMobile: boolean;
+  setIsMobile: (value: boolean) => void;
 
   fetchPools: () => Promise<void>;
   fetchPoolById: (id: string) => Promise<MiningPool | null>;
@@ -15,6 +17,8 @@ export const useMiningPoolsStore = create<PoolsState>((set) => ({
   pools: [],
   isLoading: false,
   error: null,
+  isMobile: false,
+  setIsMobile: (value) => set({ isMobile: value }),
 
   fetchPools: async () => {
     set({ isLoading: true, error: null });
