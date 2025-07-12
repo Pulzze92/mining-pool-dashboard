@@ -11,6 +11,8 @@ import {
   Box,
   Chip,
   Alert,
+  useMediaQuery,
+  useTheme as useMuiTheme,
 } from '@mui/material';
 import { MiningPool } from '@/types/pool';
 import Spinner from '../Spinner/Spinner';
@@ -159,14 +161,16 @@ export default function PoolDetailsModal({
   isLoading,
   error,
 }: PoolDetailsModalProps) {
+  const muiTheme = useMuiTheme();
+  const isMobile = useMediaQuery(muiTheme.breakpoints.down('sm'));
   return (
     <Dialog
       open={open}
       onClose={onClose}
-      maxWidth="md"
+      maxWidth={isMobile ? 'xs' : 'md'}
       fullWidth
       PaperProps={{
-        sx: { borderRadius: 2 },
+        sx: { borderRadius: 2, minWidth: isMobile ? undefined : 500 },
       }}
       BackdropProps={{
         sx: {
@@ -178,14 +182,12 @@ export default function PoolDetailsModal({
       <DialogTitle sx={{ bgcolor: 'primary.main', color: 'white', textAlign: 'center' }}>
         {pool ? `Pool: ${pool.name}` : 'Loading...'}
       </DialogTitle>
-
       <DialogContent
-        sx={{ p: 5, mt: 5, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+        sx={{ p: isMobile ? 2 : 5, mt: isMobile ? 2 : 5, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
         <ModalContent isLoading={isLoading} error={error} pool={pool} />
       </DialogContent>
-
-      <DialogActions sx={{ p: 3 }}>
+      <DialogActions sx={{ p: isMobile ? 2 : 3 }}>
         <Button onClick={onClose} variant="contained" color="primary">
           Close
         </Button>

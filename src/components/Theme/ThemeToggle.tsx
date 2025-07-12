@@ -1,22 +1,20 @@
 'use client';
 import React from 'react';
-import { Switch, FormControlLabel, Box } from '@mui/material';
+import { Switch, FormControlLabel, Box, useMediaQuery, useTheme as useMuiTheme } from '@mui/material';
 import { useTheme } from './ThemeProvider';
 
 export default function ThemeToggle() {
   const { isDarkMode, toggleTheme } = useTheme();
+  const muiTheme = useMuiTheme();
+  const isMobile = useMediaQuery(muiTheme.breakpoints.down('sm'));
 
   return (
     <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'flex-end',
-        mb: 2,
-        position: 'absolute',
-        top: 16,
-        right: 16,
-        zIndex: 1000,
-      }}
+      sx={
+        isMobile
+          ? { display: 'flex', justifyContent: 'center', mb: 2, position: 'static', top: 'auto', right: 'auto' }
+          : { display: 'flex', justifyContent: 'flex-end', mb: 0, position: 'absolute', top: 16, right: 16, zIndex: 1000 }
+      }
     >
       <FormControlLabel
         control={<Switch checked={isDarkMode} onChange={toggleTheme} color="primary" />}
