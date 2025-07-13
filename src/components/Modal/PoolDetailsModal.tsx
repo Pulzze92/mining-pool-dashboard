@@ -69,19 +69,32 @@ const InfoField = ({
 );
 
 const StatCard = ({ value, label }: { value: string | number; label: string }) => (
-  <Box textAlign="center" sx={{ p: 2, bgcolor: 'grey.100', borderRadius: 1 }}>
+  <Box
+    textAlign="center"
+    sx={{
+      p: 2,
+      bgcolor: (theme) =>
+        theme.palette.mode === 'dark' ? theme.palette.grey[900] : theme.palette.grey[100],
+      borderRadius: 1,
+    }}
+  >
     <Typography variant="h6" color="primary">
       {value}
     </Typography>
-    <Typography variant="body2" color="textSecondary">
+    <Typography variant="body2" sx={{ color: (theme) => theme.palette.text.secondary }}>
       {label}
     </Typography>
   </Box>
 );
 
-const BasicInfoSection = ({ pool }: { pool: MiningPool }) => (
+const BasicInfoSection = ({ pool, isMobile }: { pool: MiningPool; isMobile: boolean }) => (
   <InfoSection title="Basic information">
-    <Box display="grid" gridTemplateColumns="repeat(3, 1fr)" gap={2}>
+    <Box
+      display={isMobile ? 'flex' : 'grid'}
+      flexDirection={isMobile ? 'column' : undefined}
+      gridTemplateColumns={isMobile ? undefined : 'repeat(3, 1fr)'}
+      gap={2}
+    >
       <InfoField label="Pool name" value={pool.name} />
       <InfoField label="Location" value={pool.location} />
       <Box>
@@ -94,9 +107,14 @@ const BasicInfoSection = ({ pool }: { pool: MiningPool }) => (
   </InfoSection>
 );
 
-const PerformanceSection = ({ pool }: { pool: MiningPool }) => (
+const PerformanceSection = ({ pool, isMobile }: { pool: MiningPool; isMobile: boolean }) => (
   <InfoSection title="Performance">
-    <Box display="grid" gridTemplateColumns="repeat(3, 1fr)" gap={2}>
+    <Box
+      display={isMobile ? 'flex' : 'grid'}
+      flexDirection={isMobile ? 'column' : undefined}
+      gridTemplateColumns={isMobile ? undefined : 'repeat(3, 1fr)'}
+      gap={2}
+    >
       <InfoField label="24h revenue (BTC)" value={pool.last24hRevenueBTC} suffix=" BTC" />
       <InfoField label="Uptime" value={pool.uptimePercent} suffix="%" />
       <InfoField label="Fee" value={pool.feePercent} suffix="%" />
@@ -104,9 +122,14 @@ const PerformanceSection = ({ pool }: { pool: MiningPool }) => (
   </InfoSection>
 );
 
-const StatisticsSection = ({ pool }: { pool: MiningPool }) => (
+const StatisticsSection = ({ pool, isMobile }: { pool: MiningPool; isMobile: boolean }) => (
   <InfoSection title="Statistics">
-    <Box display="grid" gridTemplateColumns="repeat(4, 1fr)" gap={2}>
+    <Box
+      display={isMobile ? 'flex' : 'grid'}
+      flexDirection={isMobile ? 'column' : undefined}
+      gridTemplateColumns={isMobile ? undefined : 'repeat(4, 1fr)'}
+      gap={2}
+    >
       <StatCard value={pool.hashrateTHs} label="TH/s" />
       <StatCard value={pool.activeWorkers} label="Workers" />
       <StatCard value={`${(pool.rejectRate * 100).toFixed(2)}%`} label="Reject Rate" />
@@ -119,13 +142,13 @@ const ModalContent = ({
   isLoading,
   error,
   pool,
+  isMobile,
 }: {
   isLoading: boolean;
   error: string | null;
   pool: MiningPool | null;
+  isMobile: boolean;
 }) => {
-  const isMobile = useMiningPoolsStore((s) => s.isMobile);
-
   if (isLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" py={4}>
@@ -147,10 +170,10 @@ const ModalContent = ({
   }
 
   return (
-    <Box display="grid" gap={4} sx={{ width: isMobile ? '50%' : '100%' }}>
-      <BasicInfoSection pool={pool} />
-      <PerformanceSection pool={pool} />
-      <StatisticsSection pool={pool} />
+    <Box display="flex" flexDirection="column" gap={4}>
+      <BasicInfoSection pool={pool} isMobile={isMobile} />
+      <PerformanceSection pool={pool} isMobile={isMobile} />
+      <StatisticsSection pool={pool} isMobile={isMobile} />
     </Box>
   );
 };
@@ -170,7 +193,7 @@ export default function PoolDetailsModal({
       maxWidth={isMobile ? 'xs' : 'md'}
       fullWidth
       PaperProps={{
-        sx: { borderRadius: 2, minWidth: isMobile ? undefined : 500 },
+        sx: { borderRadius: 2 },
       }}
       BackdropProps={{
         sx: {
@@ -183,9 +206,16 @@ export default function PoolDetailsModal({
         {pool ? `Pool: ${pool.name}` : 'Loading...'}
       </DialogTitle>
       <DialogContent
-        sx={{ p: isMobile ? 2 : 5, mt: isMobile ? 2 : 5, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+        sx={{
+          p: isMobile ? 2 : 5,
+          mt: isMobile ? 2 : 5,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: isMobile ? '100%' : undefined,
+        }}
       >
-        <ModalContent isLoading={isLoading} error={error} pool={pool} />
+        <ModalContent isLoading={isLoading} error={error} pool={pool} isMobile={isMobile} />
       </DialogContent>
       <DialogActions sx={{ p: isMobile ? 2 : 3 }}>
         <Button onClick={onClose} variant="contained" color="primary">

@@ -13,4 +13,4 @@ export default function MobileDetector() {
     return () => window.removeEventListener('resize', checkMobile);
   }, [setIsMobile]);
   return null;
-} 
+}

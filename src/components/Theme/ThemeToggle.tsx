@@ -12,8 +12,23 @@ export default function ThemeToggle() {
     <Box
       sx={
         isMobile
-          ? { display: 'flex', justifyContent: 'center', mb: 2, position: 'static', top: 'auto', right: 'auto' }
-          : { display: 'flex', justifyContent: 'flex-end', mb: 0, position: 'absolute', top: 16, right: 16, zIndex: 1000 }
+          ? {
+              display: 'flex',
+              justifyContent: 'center',
+              mb: 2,
+              position: 'static',
+              top: 'auto',
+              right: 'auto',
+            }
+          : {
+              display: 'flex',
+              justifyContent: 'flex-end',
+              mb: 0,
+              position: 'absolute',
+              top: 16,
+              right: 16,
+              zIndex: 1000,
+            }
       }
     >
       <FormControlLabel

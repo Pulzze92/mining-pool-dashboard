@@ -23,7 +23,7 @@ export default function Home() {
     <Container maxWidth="xl" sx={{ py: 4 }}>
       <Box sx={{ mb: 4, textAlign: 'center', position: 'relative' }}>
         <ThemeToggle />
-        <Typography variant="h3" component="h1" gutterBottom color="primary" fontWeight="bold">
+        <Typography variant="h3" component="h1" gutterBottom color="text.primary" fontWeight="bold">
           Mining Pools Dashboard
         </Typography>
       </Box>

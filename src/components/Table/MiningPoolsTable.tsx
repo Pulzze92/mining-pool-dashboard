@@ -112,7 +112,7 @@ const MiningPoolTable = ({ data }: MiningPoolTableProps) => {
   const columns = getColumns();
 
   const filteredAndSortedData = useMemo(() => {
-    const filtered = data.filter(pool => {
+    const filtered = data.filter((pool) => {
       const matchesStatus = statusFilter === 'all' || pool.status === statusFilter;
       return matchesStatus;
     });
@@ -177,7 +177,7 @@ const MiningPoolTable = ({ data }: MiningPoolTableProps) => {
                     textTransform: 'uppercase',
                     letterSpacing: '0.05em',
                     borderBottom: 2,
-                    borderColor: 'grey.200',
+                    borderColor: 'divider',
                     width: getColumnWidth(column.key),
                     cursor: 'pointer',
                     '&:hover': { backgroundColor: 'action.hover' },
@@ -203,7 +203,7 @@ const MiningPoolTable = ({ data }: MiningPoolTableProps) => {
                   textTransform: 'uppercase',
                   letterSpacing: '0.05em',
                   borderBottom: 2,
-                  borderColor: 'grey.200',
+                  borderColor: 'divider',
                   width: '64px',
                 }}
               >
@@ -229,7 +229,7 @@ const MiningPoolTable = ({ data }: MiningPoolTableProps) => {
                       textAlign: 'center',
                       color: 'text.primary',
                       borderBottom: 1,
-                      borderColor: 'grey.200',
+                      borderColor: 'divider',
                     }}
                     onClick={() => handleInfoClick(pool)}
                   >
@@ -242,14 +242,14 @@ const MiningPoolTable = ({ data }: MiningPoolTableProps) => {
                     py: 2,
                     textAlign: 'center',
                     borderBottom: 1,
-                    borderColor: 'grey.200',
+                    borderColor: 'divider',
                   }}
                 >
                   <Tooltip title="Details">
                     <IconButton
                       size="small"
                       onClick={() => handleInfoClick(pool)}
-                      sx={{ color: 'grey.600' }}
+                      sx={{ color: 'text.secondary' }}
                     >
                       <InfoIcon />
                     </IconButton>
